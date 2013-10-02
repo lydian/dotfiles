@@ -1,0 +1,12 @@
+[submodule "vim/bundle/CuteErrorMarker"]
+	path = vim/bundle/CuteErrorMarker
+	url = git@github.com:Twinside/vim-cuteErrorMarker.git
+[submodule "vim/bundle/OmniCppComplete"]
+	path = vim/bundle/OmniCppComplete
+	url = https://github.com/vim-scripts/OmniCppComplete.git
+[submodule "vim/bundle/VisIncr"]
+	path = vim/bundle/VisIncr
+	url = https://github.com/vim-scripts/VisIncr.git
+[submodule "vim/bundle/python-mode"]
+	path = vim/bundle/python-mode
+	url = git@github.com:klen/python-mode.git
