@@ -8,15 +8,21 @@ YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
 BLUE="\[\033[0;34m\]"
 PURPLE="\[\033[0;35m\]"
+CYAN="\[\033[0;36m\]"
 NO_COLOUR="\[\033[0m\]"
 
-PS1="$GREEN\u@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
+PS1="$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
 
-export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
-test $SSH_AUTH_SOCK && ln -sf "$SSH_AUTH_SOCK" "/tmp/ssh-agent-$USER-screen"
+#export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
+#test $SSH_AUTH_SOCK && ln -sf "$SSH_AUTH_SOCK" "/tmp/ssh-agent-$USER-screen"
 
 
-
+# Set symlink for forwarding agent in screen 
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "/tmp/ssh-agent-$USER-screen" ]
+then
+	rm -f /tmp/ssh-agent-$USER-screen
+	ln -sf "$SSH_AUTH_SOCK" "/tmp/ssh-agent-$USER-screen"
+fi
 
 shopt -s expand_aliases # To allow use the alias in screen
 alias sb='sandbox --minimal bash'
