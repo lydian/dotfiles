@@ -1,9 +1,10 @@
 #!/bin/sh
-git submodule update --init 
+git submodule update --init --recursive 
 
 cd ..
 ln -fs .dotfiles/bashrc .bashrc
 ln -fs .dotfiles/screenrc .screenrc
+ln -fs .dotfiles/tmux.conf .tmux.conf
 
 # vim setup
 ln -fs .dotfiles/vim .vim
