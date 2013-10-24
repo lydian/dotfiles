@@ -15,11 +15,20 @@ Author: Lydian
 * Display branch name when you are inside a git repo
 
 
-## screenrc
+## tmux.conf
 
 * Display label of each screen at the bottom 
+* Update the keymap to be exactly the same as screen, i.e., use ^a instead of ^b
 * Use <shift> + A to rename screen
 * forwarding ssh agent while reconnecting to the session
+
+ref: [source|https://github.com/tsung/config/blob/master/shell/tmux.conf]
+
+
+## git autocomplete
+* auto complete git commands and branch names
+
+ref: [source|https://github.com/git/git/blob/master/contrib/completion/git-completion.bash]
 
 ## vim
 

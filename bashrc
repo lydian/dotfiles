@@ -1,4 +1,4 @@
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:~/pg/yelp-main/tools/$PATH
 
 function parse_git_branch () {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -23,6 +23,13 @@ then
 	rm -f /tmp/ssh-agent-$USER-screen
 	ln -sf "$SSH_AUTH_SOCK" "/tmp/ssh-agent-$USER-screen"
 fi
+echo "Now using lydian's bashrc"
 
 shopt -s expand_aliases # To allow use the alias in screen
 alias sb='sandbox --minimal bash'
+alias ta='tmux attach'
+
+# Auto complete git
+if [ -f ~/.git-completion.bash ]; then
+	. ~/.git-completion.bash
+fi
