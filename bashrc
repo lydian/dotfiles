@@ -18,10 +18,11 @@ PS1="$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
 
 
 # Set symlink for forwarding agent in screen 
-if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "/tmp/ssh-agent-$USER-screen" ]
+SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
 then
-	rm -f /tmp/ssh-agent-$USER-screen
-	ln -sf "$SSH_AUTH_SOCK" "/tmp/ssh-agent-$USER-screen"
+	rm -f "$SSH_SOCK_PATH"
+	ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
 fi
 echo "Now using lydian's bashrc"
 
