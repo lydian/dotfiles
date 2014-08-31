@@ -1,6 +1,6 @@
 [[ $- == *i* ]] || return
 
-export PATH=~/.local/bin/:~/.local/usr/bin/:/usr/local/bin:~/.dotfiles/bin/:$PATH
+export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:$PATH
 
 function parse_current_tunnel() {
   if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
@@ -51,9 +51,17 @@ alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
 alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
 
 
-
 shopt -s expand_aliases # To allow use the alias in screen
 
+# Set symlink for forwarding agent in screen
+SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
+then
+	rm -f "$SSH_SOCK_PATH"
+	ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
+fi
+
+shopt -s expand_aliases # To allow use the alias in screen
 
 # Auto complete git
 if [ -f ~/.git-completion.bash ]; then
