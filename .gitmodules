@@ -12,7 +12,7 @@
 	url = git@github.com:klen/python-mode.git
 [submodule "vimrc"]
 	path = vimrc
-	url = git@github.com:lydian/vimrc.git
+	url = git@bitbucket.org:lydian/vimrc.git
 [submodule "vim"]
 	path = vim
 	url = git@github.com:lydian/vimrc.git
