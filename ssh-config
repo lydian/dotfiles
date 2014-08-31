@@ -1,3 +1,27 @@
 Host prod
+	User tingyenl
 	ForwardAgent yes
 	HostName adhoc-sfo1
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host devc 
+	User tingyenl
+	ForwardAgent yes
+	HostName dev5-devc 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host spam 
+	User tingyenl
+	ForwardAgent yes
+	HostName spamdev1-devc 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host lydian 
+	User lydian 
+	ForwardAgent yes
+	HostName direct.lydian.tw 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
