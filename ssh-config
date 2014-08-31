@@ -1,0 +1,3 @@
+Host prod
+	ForwardAgent yes
+	HostName adhoc-sfo1
