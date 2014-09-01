@@ -10,6 +10,7 @@ ln -fs ~/.dotfiles/remotecopyrc .remotecopyrc
 ln -fs ~/.dotfiles/ssh-config .ssh/config
 
 # Vim
+ln -fs ~/.dotfiles/vimrc .vim
 ln -fs ~/.dotfiles/vimrc/vimrc .vimrc
 ~/.dotfiles/vimrc/install.sh
 
