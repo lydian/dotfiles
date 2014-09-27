@@ -19,9 +19,41 @@ Host spam
 	RemoteForward 54321 localhost:54321
 	IdentityFile ~/.ssh/id_rsa 
 
+Host deploy-devc 
+	User push
+	ForwardAgent yes
+	HostName deploy-devc 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host deploy-stagea 
+	User push
+	ForwardAgent yes
+	HostName deploy-stagea 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host deploy-stageb 
+	User push
+	ForwardAgent yes
+	HostName deploy-stageb 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
+Host deploy-prod 
+	User push
+	ForwardAgent yes
+	HostName deploy-prod 
+	RemoteForward 54321 localhost:54321
+	IdentityFile ~/.ssh/id_rsa 
+
 Host lydian 
 	User lydian 
 	ForwardAgent yes
 	HostName direct.lydian.tw 
 	RemoteForward 54321 localhost:54321
 	IdentityFile ~/.ssh/id_rsa 
+
+Host * 
+	ForwardAgent yes
+
