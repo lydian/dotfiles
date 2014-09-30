@@ -102,6 +102,7 @@ if has("gui_running")	" GUI color and font settings
 else
 " terminal color settings
 	colorscheme candy 
+	hi Search cterm=NONE ctermfg=black ctermbg=grey
 endif
 
 " Setup spell
