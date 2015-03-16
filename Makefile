@@ -14,5 +14,6 @@ install-config:
 	ln -fs ~/.dotfiles/git-completion.bash ~/.git-completion.bash
 	ln -fs ~/.dotfiles/remotecopyrc ~/.remotecopyrc
 	ln -fs ~/.dotfiles/ssh-config ~/.ssh/config
+	ln -fs ~/.dotfiles/gitconfig ~/.ssh/.gitconfig
 
 	

@@ -4,7 +4,7 @@ export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg
 
 function parse_current_tunnel() {
 	if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
-		echo "(realprod)"
+		echo "($YELP_SPAM_SANDBOX_TYPE)"
   elif [[ "$YELP_IN_SANDBOX" -eq 1 ]]; then
 			if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW 
 			then 
