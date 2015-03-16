@@ -136,7 +136,7 @@ if has("gui_running")	" GUI color and font settings
 else
 " terminal color settings
 	colorscheme candy
-    set background=dark
+  set background=dark
 	hi Search cterm=NONE ctermfg=black ctermbg=grey
 endif
 
@@ -214,6 +214,10 @@ function! HasPaste()
 endfunction
 
 "}
+
+" code folding
+set foldmethod=indent
+set foldlevel=99
 
 " Highlight after 80
 " highlight ColorColumn ctermbg=
@@ -304,6 +308,8 @@ map <leader>d :YcmCompleter GoTo<CR>
 "map <leader>d :RopeGotoDefinition<CR>
 "map <leader>r :RopeRename<CR>
 
+"ctags
+map <leader>c :!ctags -R -f ./tags `python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()`<CR>
 "---------------------------------------------------------------------------
 " PLUGIN SETTINGS
 "---------------------------------------------------------------------------
@@ -421,7 +427,6 @@ let g:syntastic_aggregate_errors = 1
 if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
         execute getcwd() + "/virutalenv_run/bin/pip install pylint"
 endif
-
 
 nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
