@@ -17,5 +17,5 @@
 	path = vim
 	url = git@github.com:lydian/vimrc.git
 [submodule "bin/remotecopy"]
-	path = bin/remotecopy
+	path = package/remotecopy
 	url = git@bitbucket.org:lydian/remotecopy.git
