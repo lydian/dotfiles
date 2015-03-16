@@ -1,6 +1,6 @@
 [[ $- == *i* ]] || return
 
-export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg/yelp-main/tools/:~/.dotfiles/bin/remotecopy/:$PATH
+export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg/yelp-main/tools/:~/.dotfiles/bin/:$PATH
 
 function parse_current_tunnel() {
 	if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
