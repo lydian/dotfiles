@@ -44,7 +44,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Shougo/neocomplcache.vim'
 "" Schema check, debug
 Plugin 'klen/python-mode'
-"" syntax check 
+"" syntax check
 Plugin 'scrooloose/syntastic'
 "" run pytest in vim
 Plugin 'alfredodeza/pytest.vim'
@@ -57,7 +57,8 @@ Plugin 'ervandew/supertab'
 Plugin 'bling/vim-airline'
 " cmdline complete
 Plugin 'vim-scripts/CmdlineComplete'
-
+" virtualenv
+Plugin 'jmcantrell/vim-virtualenv'
 " Rails
 Plugin 'tpope/vim-rails'
 
@@ -94,19 +95,19 @@ set hlsearch		" search highlighting
 
 if has("gui_running")	" GUI color and font settings
   set guifont=Osaka-Mono:h20
-  set background=dark 
+  set background=dark
   set t_Co=256          " 256 color mode
   set cursorline        " highlight current line
   colors moria
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
 else
 " terminal color settings
-	colorscheme candy 
+	colorscheme candy
 	hi Search cterm=NONE ctermfg=black ctermbg=grey
 endif
 
 " Setup spell
-autocmd BufNewFile,BufRead *.txt setlocal spell 
+autocmd BufNewFile,BufRead *.txt setlocal spell
 
 set clipboard=unnamed	" yank to the system register (*) by default
 set showmatch		" Cursor shows matching ) and }
@@ -131,7 +132,7 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-  
+
 " autoreload tab
 autocmd BufWritePost .vimrc source %
 
@@ -143,8 +144,8 @@ autocmd BufWritePost .vimrc source %
 "
 " TAB setting{
    set expandtab        "replace <TAB> with spaces
-   "set softtabstop=2 
-   "set shiftwidth=2 
+   "set softtabstop=2
+   "set shiftwidth=2
 
    autocmd FileType * setlocal tabstop=2|set shiftwidth=2|set noexpandtab
    autocmd FileType yaml setlocal tabstop=8|set shiftwidth=2| set softtabstop=2|set expandtab
@@ -152,14 +153,14 @@ autocmd BufWritePost .vimrc source %
    autocmd FileType python setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType *.js setlocal shiftwidth=2 tabstop=2
    au FileType Makefile set noexpandtab
-"}      							
+"}
 
 
 " status line {
 set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \ 
-set statusline+=\ \ \ [%{&ff}/%Y] 
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\ 
+set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+set statusline+=\ \ \ [%{&ff}/%Y]
+set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
 set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
 
 function! CurDir()
@@ -177,7 +178,7 @@ endfunction
 
 "}
 
-" code folding 
+" code folding
 set foldmethod=indent
 set foldlevel=99
 
@@ -188,34 +189,45 @@ let &colorcolumn=join(range(81,82),",")
 " C/C++ specific settings
 autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
 
+
+"trailing whitespace
+function! TrimWhiteSpace()
+	%s/\s\+$//e
+endfunction
+autocmd FileWritePre    * :call TrimWhiteSpace()
+autocmd FileAppendPre   * :call TrimWhiteSpace()
+autocmd FilterWritePre  * :call TrimWhiteSpace()
+autocmd BufWritePre     * :call TrimWhiteSpace()
+
+
 "Restore cursor to file position in previous editing session
 set viminfo='10,\"100,:20,%,n~/.viminfo
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
-"--------------------------------------------------------------------------- 
-" Tip #382: Search for <cword> and replace with input() in all open buffers 
-"--------------------------------------------------------------------------- 
-fun! Replace() 
-    let s:word = input("Replace " . expand('<cword>') . " with:") 
-    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge' 
-    :unlet! s:word 
-endfun 
+"---------------------------------------------------------------------------
+" Tip #382: Search for <cword> and replace with input() in all open buffers
+"---------------------------------------------------------------------------
+fun! Replace()
+    let s:word = input("Replace " . expand('<cword>') . " with:")
+    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge'
+    :unlet! s:word
+endfun
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " ENCODING SETTINGS
-"--------------------------------------------------------------------------- 
-set encoding=utf-8                                  
+"---------------------------------------------------------------------------
+set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,big5,gb2312,latin1
 
 fun! ViewUTF8()
-	set encoding=utf-8                                  
+	set encoding=utf-8
 	set termencoding=big5
 endfun
 
 fun! UTF8()
-	set encoding=utf-8                                  
+	set encoding=utf-8
 	set termencoding=big5
 	set fileencoding=utf-8
 	set fileencodings=ucs-bom,big5,utf-8,latin1
@@ -226,9 +238,9 @@ fun! Big5()
 	set fileencoding=big5
 endfun
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " USEFUL SHORTCUTS
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
@@ -250,7 +262,7 @@ nnoremap <space> za
 vnoremap <space> zf
 
 "Switch Split from horizontal to vertical
-nnoremap <C-V> <C-W>t<C-W>H 
+nnoremap <C-V> <C-W>t<C-W>H
 "Switch Split from vertical to horizontal
 nnoremap <C-H> <C-W>t<C-W>K
 
@@ -260,19 +272,19 @@ nnoremap <C-H> <C-W>t<C-W>K
 
 "ctags
 map <leader>c :!ctags -R -f ./tags `python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()`<CR>
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " PLUGIN SETTINGS
 "---------------------------------------------------------------------------
 " YouCompleteMe
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
 
-" Ctrl+N to Toggle Nerdtree 
+" Ctrl+N to Toggle Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
 " Do not show preview window for autocomplete
 set completeopt-=preview
 
-" Airline config 
+" Airline config
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
@@ -312,9 +324,9 @@ nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<cr>
 nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<cr>
 nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
 
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
-"--------------------------------------------------------------------------- 
+"---------------------------------------------------------------------------
 " Enable omni completion. (Ctrl-X Ctrl-O)
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS

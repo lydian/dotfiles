@@ -1,59 +1,84 @@
+HOST preprod
+	ForwardAgent yes
+	HostName preprod1-uswest1cdevc
+
+Host rk
+	User rk
+	ForwardAgent yes
+	HostName aux1.restaurant-kritik.de
+
+Host cv
+	User ubuntu
+	HostName spam1-cityvox.yelpcorp.com
+	IdentityFile /nail/home/tingyenl/.ssh/SPAM_CV_SEC-1157.pem
+
+Host spambatch4
+	User tingyenl
+	ForwardAgent yes
+	HostName spambatch4-uswest1aprod
+	ProxyCommand ssh prod nc %h %p
+
+Host spambatch3
+	User tingyenl
+	ForwardAgent yes
+	HostName spambatch3-uswest1aprod
+	ProxyCommand ssh prod nc %h %p
+
 Host prod
 	User tingyenl
 	ForwardAgent yes
-	HostName adhoc-sfo1
-	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	HostName adhoc-sfo2
+	IdentityFile ~/.ssh/id_rsa
 
-Host devc 
+Host devc
 	User tingyenl
 	ForwardAgent yes
-	HostName dev5-devc 
+	HostName dev5-devc
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host spam 
+Host spam
 	User tingyenl
 	ForwardAgent yes
-	HostName spamdev1-devc 
+	HostName spamdev1-devc
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host deploy-devc 
+Host deploy-devc
 	User push
 	ForwardAgent yes
-	HostName deploy-devc 
+	HostName deploy-devc
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host deploy-stagea 
+Host deploy-stagea
 	User push
 	ForwardAgent yes
-	HostName deploy-stagea 
+	HostName deploy-stagea
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host deploy-stageb 
+Host deploy-stageb
 	User push
 	ForwardAgent yes
-	HostName deploy-stageb 
+	HostName deploy-stageb
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host deploy-prod 
+Host deploy-prod
 	User push
 	ForwardAgent yes
-	HostName deploy-prod 
+	HostName deploy-prod
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host lydian 
-	User lydian 
+Host lydian
+	User lydian
 	ForwardAgent yes
-	HostName direct.lydian.tw 
+	HostName direct.lydian.tw
 	RemoteForward 54321 localhost:54321
-	IdentityFile ~/.ssh/id_rsa 
+	IdentityFile ~/.ssh/id_rsa
 
-Host * 
+Host *
 	ForwardAgent yes
 
