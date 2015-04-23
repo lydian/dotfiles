@@ -147,11 +147,12 @@ autocmd BufWritePost .vimrc source %
    "set softtabstop=2
    "set shiftwidth=2
 
-   autocmd FileType * setlocal tabstop=2|set shiftwidth=2|set noexpandtab
-   autocmd FileType yaml setlocal tabstop=8|set shiftwidth=2| set softtabstop=2|set expandtab
+   autocmd FileType * setlocal tabstop=4|set shiftwidth=4|set expandtab
+   autocmd FileType yaml setlocal tabstop=8|set shiftwidth=4| set softtabstop=2|set expandtab
    autocmd FileType java setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType python setlocal tabstop=4|set shiftwidth=4|set expandtab
-   autocmd FileType *.js setlocal shiftwidth=2 tabstop=2
+   autocmd FileType *.sh setlocal tabstop=4|set shiftwidth=4|set expandtab
+   autocmd FileType *.js setlocal shiftwidth=4 tabstop=4
    au FileType Makefile set noexpandtab
 "}
 

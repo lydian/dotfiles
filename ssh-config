@@ -11,11 +11,24 @@ Host cv
 	User ubuntu
 	HostName spam1-cityvox.yelpcorp.com
 	IdentityFile /nail/home/tingyenl/.ssh/SPAM_CV_SEC-1157.pem
+	ProxyCommand ssh prod nc %h %p
 
-Host spambatch4
+Host prod
 	User tingyenl
 	ForwardAgent yes
-	HostName spambatch4-uswest1aprod
+	HostName adhoc-sfo2
+	IdentityFile ~/.ssh/id_rsa
+
+Host spambatch1
+	User tingyenl
+	ForwardAgent yes
+	HostName spambatch1-uswest1aprod
+	ProxyCommand ssh prod nc %h %p
+
+Host spambatch2
+	User tingyenl
+	ForwardAgent yes
+	HostName spambatch2-uswest1aprod
 	ProxyCommand ssh prod nc %h %p
 
 Host spambatch3
@@ -24,11 +37,11 @@ Host spambatch3
 	HostName spambatch3-uswest1aprod
 	ProxyCommand ssh prod nc %h %p
 
-Host prod
+Host spambatch4
 	User tingyenl
 	ForwardAgent yes
-	HostName adhoc-sfo2
-	IdentityFile ~/.ssh/id_rsa
+	HostName spambatch4-uswest1aprod
+	ProxyCommand ssh prod nc %h %p
 
 Host devc
 	User tingyenl
