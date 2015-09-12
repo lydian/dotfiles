@@ -25,8 +25,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 
 " File finder
+Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
+Plugin 'Shougo/unite.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'mileszs/ack.vim'
 
 " Moving cursor
 Plugin 'Lokaltog/vim-easymotion'
@@ -34,16 +37,21 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-scripts/taglist.vim'
 
+Plugin 'terryma/vim-multiple-cursors'
+
 " Git
 "" Provide handy Gxxx git command
 Plugin 'tpope/vim-fugitive'
 "" Show git diff
 Plugin 'airblade/vim-gitgutter'
+Plugin 'gregsexton/gitv'
 
 " Python
-Plugin 'Shougo/neocomplcache.vim'
 "" Schema check, debug
-Plugin 'klen/python-mode'
+"Plugin 'klen/python-mode'
+"Plugin 'davidhalter/jedi-vim'
+Plugin 'Valloric/YouCompleteMe'
+
 "" syntax check
 Plugin 'scrooloose/syntastic'
 "" run pytest in vim
@@ -64,6 +72,23 @@ Plugin 'tpope/vim-rails'
 
 " tmux-navigator
 Plugin 'christoomey/vim-tmux-navigator'
+
+
+" javascript
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'burnettk/vim-angular'
+Plugin 'matthewsimo/angular-vim-snippets'
+Plugin 'Shutnik/jshint2.vim'
+
+Plugin 'marijnh/tern_for_vim'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'Raimondi/delimitMate'
+Plugin 'lukaszb/vim-web-indent'
+
+" html
+Plugin 'mattn/emmet-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -103,6 +128,7 @@ if has("gui_running")	" GUI color and font settings
 else
 " terminal color settings
 	colorscheme candy
+    set background=dark
 	hi Search cterm=NONE ctermfg=black ctermbg=grey
 endif
 
@@ -149,10 +175,13 @@ autocmd BufWritePost .vimrc source %
 
    autocmd FileType * setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType yaml setlocal tabstop=8|set shiftwidth=4| set softtabstop=2|set expandtab
+   autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
+   autocmd FileType jasmine.javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
+   autocmd FileType scss setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
+   autocmd FileType html setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType java setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType python setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType *.sh setlocal tabstop=4|set shiftwidth=4|set expandtab
-   autocmd FileType *.js setlocal shiftwidth=4 tabstop=4
    au FileType Makefile set noexpandtab
 "}
 
@@ -276,8 +305,29 @@ map <leader>c :!ctags -R -f ./tags `python -c "from distutils.sysconfig import g
 "---------------------------------------------------------------------------
 " PLUGIN SETTINGS
 "---------------------------------------------------------------------------
-" YouCompleteMe
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
+" Unite
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" nnoremap <C-p> :Unite -start-insert file_rec<CR>
+
+"ctrlp
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
+
+" faster grep, The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Ctrl+N to Toggle Nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -291,6 +341,10 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+"YouCompleteMe
+nnoremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_goto_buffer_command = 'horizontal-split'
+
 " Python-mode
 " turn-off plugin's warning
 let g:pymode_warnings = 0
@@ -301,29 +355,34 @@ let g:pymode_virtualenv_path = 'virtualenv_run'
 let g:pymode_folding = 1
 " Enable pymode motion
 let g:pymode_motion = 1
-" ,b to insert break point
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_cmd = 'import ipdb'
 " code check
 let g:pymode_lint_checkers = ['pyflakes']
 let g:pymode_lint_ignore = "W"
 " trim whitespace on save
 let g:pymode_trim_whitespace = 1
 " disable rope completion
+let g:pymode_rope_autoimport = 0
+let g:pymode_rope = 0
+let g:pymode_rope_lookup_project = 0
 let g:pymode_rope_completion = 1
-" ,d to go to definition
 let g:pymode_rope_goto_definition_bind = '<leader>d'
-let g:pymode_rope_rename_bind = '<leader>re'
+let g:pymode_rope_rename_bind = '<leader>r'
 let g:pymode_rope_rename_module_bind = '<leader>rm'
+
+"jshint2
+let jshint2_save = 1
 
 "Tmux integration
 let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<cr>
-nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<cr>
-nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<cr>
-nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<cr>
-nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
+"syntax
+let g:syntastic_check_on_open=1
+
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+"nnoremap <silent> <c-p> :TmuxNavigatePrevious<cr>
 
 "---------------------------------------------------------------------------
 " PROGRAMMING SHORTCUTS
@@ -331,7 +390,7 @@ nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
 " Enable omni completion. (Ctrl-X Ctrl-O)
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType c set omnifunc=ccomplete#Complete
@@ -342,8 +401,5 @@ let g:SuperTabDefaultCompletionType = "context"
 
 "set cot-=preview "disable doc preview in omnicomplete
 " make CSS omnicompletion work for SASS and SCSS
-autocmd BufNewFile,BufRead *.scss             set ft=scss.css
-autocmd BufNewFile,BufRead *.sass             set ft=sass.css
-
 autocmd BufEnter /usr/share/vim/vim73/doc/*.txt  set nospell
 autocmd BufLeave /usr/share/vim/vim73/doc/*.txt  set spell
