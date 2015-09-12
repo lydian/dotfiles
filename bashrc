@@ -1,11 +1,16 @@
 [[ $- == *i* ]] || return
 
+<<<<<<< 9fad2965f0b71645c0cb8b0241e5859ac8ac6b32
 export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:$PATH
+=======
+export PATH=~/local/bin/:~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg/yelp-main/tools/:~/.dotfiles/bin/:~/.local/bin::$PATH
+>>>>>>> new packages
 
 function parse_current_tunnel() {
   if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
         echo "($YELP_SPAM_SANDBOX_TYPE)"
   elif [[ "$YELP_IN_SANDBOX" -eq 1 ]]; then
+<<<<<<< 9fad2965f0b71645c0cb8b0241e5859ac8ac6b32
         if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW
         then
                 echo "(proddb)"
@@ -13,6 +18,16 @@ function parse_current_tunnel() {
                 echo "(sandbox)"
         fi
 fi
+=======
+			if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW
+			then
+				echo "(proddb)"
+			else
+				echo "(sandbox)"
+			fi
+	fi
+
+>>>>>>> new packages
 }
 
 function parse_inenv() {
