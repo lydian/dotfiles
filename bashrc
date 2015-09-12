@@ -1,13 +1,13 @@
 [[ $- == *i* ]] || return
 
-export PATH=~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg/yelp-main/tools/:~/.dotfiles/bin/:$PATH
+export PATH=~/local/bin/:~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/pg/yelp-main/tools/:~/.dotfiles/bin/:~/.local/bin::$PATH
 
 function parse_current_tunnel() {
 	if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
 		echo "($YELP_SPAM_SANDBOX_TYPE)"
   elif [[ "$YELP_IN_SANDBOX" -eq 1 ]]; then
-			if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW 
-			then 
+			if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW
+			then
 				echo "(proddb)"
 			else
 				echo "(sandbox)"
@@ -39,13 +39,18 @@ PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w
 
 
 
-# Set symlink for forwarding agent in screen 
-SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
-if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
-then
-	rm -f "$SSH_SOCK_PATH"
-	ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
-fi
+# Set symlink for forwarding agent in screen
+_ssh_auth_save() {
+    SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
+    if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
+    then
+	    rm -f "$SSH_SOCK_PATH"
+	    ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
+    fi
+}
+alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
+alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) ; tmux'
+
 
 
 shopt -s expand_aliases # To allow use the alias in screen
@@ -59,3 +64,9 @@ fi
 if [ -f ~/.alias.bash ]; then
 	source ~/.alias.bash
 fi
+
+# load highlighter
+. ~/.dotfiles/package/hhighlighter/h.sh
+
+# bashmark
+source ~/.local/bin/bashmarks.sh

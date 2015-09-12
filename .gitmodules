@@ -19,3 +19,9 @@
 [submodule "bin/remotecopy"]
 	path = package/remotecopy
 	url = git@bitbucket.org:lydian/remotecopy.git
+[submodule "package/hhighlighter"]
+	path = package/hhighlighter
+	url = https://github.com/paoloantinori/hhighlighter.git
+[submodule "package/bashmarks"]
+	path = package/bashmarks
+	url = git://github.com/huyng/bashmarks.git
