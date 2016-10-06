@@ -308,8 +308,6 @@ map <leader>d :YcmCompleter GoTo<CR>
 "map <leader>d :RopeGotoDefinition<CR>
 "map <leader>r :RopeRename<CR>
 
-"ctags
-map <leader>c :!ctags -R -f ./tags `python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()`<CR>
 "---------------------------------------------------------------------------
 " PLUGIN SETTINGS
 "---------------------------------------------------------------------------
@@ -334,6 +332,7 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
@@ -342,6 +341,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 map <leader>f :bprevious<CR>
 map <leader>n :bnext<CR>
+" Do not show preview window for autocomplete
+set completeopt-=preview
 
 " Airline config
 " Enable the list of buffers
@@ -368,6 +369,9 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = ""
 let g:jedi#show_call_signatures = "1"
 let g:jedi#show_call_signatures_delay = 0
+
+" virtualenv
+let g:virtualenv_auto_activate = 1
 
 " virtualenv
 let g:virtualenv_auto_activate = 1
@@ -416,17 +420,14 @@ let jshint2_save = 1
 let g:tmux_navigator_no_mappings = 1
 
 "syntax
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_python_checkers = ['python', 'flake8', 'pyflakes', 'pylint']
-"let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
-let g:syntastic_aggregate_errors = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
 
 if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
+        echo "install pylint"
         execute getcwd() + "/virutalenv_run/bin/pip install pylint"
 endif
 

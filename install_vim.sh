@@ -11,5 +11,6 @@ cd vim
             --enable-perlinterp \
             --enable-luainterp \
             --enable-cscope --prefix=/usr
-make VIMRUNTIMEDIR=/usr/share/vim/vim80
+            --enable-gui=gtk2 --enable-cscope --prefix=/usr
+make VIMRUNTIMEDIR=/usr/share/vim/vim74
 make install DESTDIR=~/.local
