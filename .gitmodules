@@ -25,3 +25,6 @@
 [submodule "package/bashmarks"]
 	path = package/bashmarks
 	url = git://github.com/huyng/bashmarks.git
+[submodule "package/tpm"]
+	path = package/tpm
+	url = https://github.com/tmux-plugins/tpm

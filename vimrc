@@ -46,6 +46,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'gregsexton/gitv'
 
+" Snippet
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 " Python
 "" Schema check, debug
 "Plugin 'klen/python-mode'
@@ -173,7 +177,6 @@ autocmd BufWritePost .vimrc source %
    "set softtabstop=2
    "set shiftwidth=2
 
-   autocmd FileType * setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType yaml setlocal tabstop=8|set shiftwidth=4| set softtabstop=2|set expandtab
    autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType jasmine.javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
@@ -182,7 +185,7 @@ autocmd BufWritePost .vimrc source %
    autocmd FileType java setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType python setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType *.sh setlocal tabstop=4|set shiftwidth=4|set expandtab
-   au FileType Makefile set noexpandtab
+   autocmd FileType Makefile set noexpandtab
 "}
 
 
@@ -282,7 +285,7 @@ imap <C-E> <End>
 " Bash like keys for the command line
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
-cnoremap <C-K>      <C-U>
+cnoremap <C-K> <C-U>
 
 " ,p toggles paste mode
 nmap <leader>p :set paste!<BAR>set paste?<CR>
@@ -297,11 +300,10 @@ nnoremap <C-V> <C-W>t<C-W>H
 nnoremap <C-H> <C-W>t<C-W>K
 
 "Go to definition
+map <leader>d :YcmCompleter GoTo<CR>
 "map <leader>d :RopeGotoDefinition<CR>
-" map <leader>r :RopeRename<CR>
+"map <leader>r :RopeRename<CR>
 
-"ctags
-map <leader>c :!ctags -R -f ./tags `python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()`<CR>
 "---------------------------------------------------------------------------
 " PLUGIN SETTINGS
 "---------------------------------------------------------------------------
@@ -326,12 +328,15 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Ctrl+N to Toggle Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
+map <leader>f :bprevious<CR>
+map <leader>n :bnext<CR>
 " Do not show preview window for autocomplete
 set completeopt-=preview
 
@@ -344,6 +349,9 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 "YouCompleteMe
 nnoremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_goto_buffer_command = 'horizontal-split'
+
+" virtualenv
+let g:virtualenv_auto_activate = 1
 
 " Python-mode
 " turn-off plugin's warning
@@ -376,7 +384,17 @@ let jshint2_save = 1
 let g:tmux_navigator_no_mappings = 1
 
 "syntax
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
+
+if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
+        echo "install pylint"
+        execute getcwd() + "/virutalenv_run/bin/pip install pylint"
+endif
+
 
 nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <c-j> :TmuxNavigateDown<cr>

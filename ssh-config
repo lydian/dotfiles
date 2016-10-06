@@ -1,11 +1,16 @@
 Host jumpbox-prod.yelpcorp.com
    Port 222
+   Hostname 10.29.2.28
+   # We don't necessarily need to do this, but jump boxes do *not*
+   # need agent forwarding. A user may ssh directly to a jumpbox with
+   # -A if they need to sudo on the jumpbox itself for whatever reason.
    ForwardAgent no
 
-Host prod
-    User tingyenl
-    HostName adhoc-sfo2
-    ProxyCommand ssh jumpbox-prod.yelpcorp.com nc %h %p
+Host *.prod.yelpcorp.com *.365.yelpcorp.com prod
+   ProxyCommand ssh jumpbox-prod.yelpcorp.com -W %h:%p
+# More or less Prod ips. ssh doesn't understand CIDR, but this is close enough
+Host 10.7.* 10.16.* 10.36.* 10.38.* 10.44.* 10.46.* 10.64.* 10.65.* 10.69.* 10.70.*
+   ProxyCommand ssh jumpbox-prod.yelpcorp.com -W %h:%p
 
 Host spambatch1
     HostName spambatch1-uswest1bprod
@@ -19,10 +24,19 @@ Host spambatch3
 Host spambatch4
     HostName spambatch4-uswest1aprod
 
+Host spambatch5
+    HostName spambatch5-uswest1bprod
+
+Host spambatch6
+    HostName spambatch6-uswest1bprod
+
 Host spambatch*
     User tingyenl
     ProxyCommand ssh prod nc %h %p
 
+Host prod
+    User tingyenl
+    HostName adhoc-sfo2
 
 Host devc
     HostName dev5-devc
@@ -48,7 +62,6 @@ Host deploy-prod
 Host devc spam deploy-* dev*-devc
     User tingyenl
     IdentityFile ~/.ssh/id_rsa
-
 
 Host lydian
     User lydian
