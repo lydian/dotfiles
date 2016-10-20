@@ -3,18 +3,18 @@
 export PATH=~/.local/bin/:~/.local/usr/bin/:/usr/local/bin:~/.dotfiles/bin/::$PATH
 
 function parse_current_tunnel() {
-	if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
-		echo "($YELP_SPAM_SANDBOX_TYPE)"
+  if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
+        echo "($YELP_SPAM_SANDBOX_TYPE)"
   elif [[ "$YELP_IN_SANDBOX" -eq 1 ]]; then
-			if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW
-			then
-				echo "(proddb)"
-			else
-				echo "(sandbox)"
-			fi
-	fi
-
+        if grep -q "proddb" $YELP_TOPOLOGY_CONFIG_NEW
+        then
+                echo "(proddb)"
+        else
+                echo "(sandbox)"
+        fi
+fi
 }
+
 function parse_inenv() {
 	if [[ -n "$BASEPATH" ]]; then
 		echo "(INENV)"
@@ -33,6 +33,23 @@ CYAN="\[\033[0;36m\]"
 NO_COLOUR="\[\033[0m\]"
 
 PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
+
+# Set symlink for forwarding agent in screen
+_ssh_auth_save() {
+    SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
+    if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
+    then
+	    rm -f "$SSH_SOCK_PATH"
+	    ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
+    fi
+}
+alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
+alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) ; tmux'
+
+
+
+shopt -s expand_aliases # To allow use the alias in screen
+
 
 # Auto complete git
 if [ -f ~/.git-completion.bash ]; then

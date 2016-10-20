@@ -31,6 +31,9 @@ Plugin 'Shougo/unite.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
 
+" folding
+Plugin 'tmhedberg/SimpylFold'
+
 " Moving cursor
 Plugin 'Lokaltog/vim-easymotion'
 " display tabline in color
@@ -211,10 +214,6 @@ endfunction
 
 "}
 
-" code folding
-set foldmethod=indent
-set foldlevel=99
-
 " Highlight after 80
 " highlight ColorColumn ctermbg=
 let &colorcolumn=join(range(81,82),",")
@@ -376,6 +375,12 @@ let g:pymode_rope_completion = 1
 let g:pymode_rope_goto_definition_bind = '<leader>d'
 let g:pymode_rope_rename_bind = '<leader>r'
 let g:pymode_rope_rename_module_bind = '<leader>rm'
+
+" code folding
+let g:SimpylFold_docstring_preview=1
+set foldmethod=indent
+set foldlevel=99
+
 
 "jshint2
 let jshint2_save = 1
