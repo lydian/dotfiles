@@ -2,8 +2,6 @@
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
-  echo ""
   silent !mkdir -p ~/.vim/bundle
   silent !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   let iCanHazVundle=0
@@ -33,6 +31,7 @@ Plugin 'mileszs/ack.vim'
 
 " folding
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'roalddevries/yaml.vim'
 
 " Moving cursor
 Plugin 'Lokaltog/vim-easymotion'
@@ -97,6 +96,8 @@ Plugin 'lukaszb/vim-web-indent'
 " html
 Plugin 'mattn/emmet-vim'
 
+" puppet
+Plugin 'rodjek/vim-puppet'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -391,12 +392,12 @@ let g:tmux_navigator_no_mappings = 1
 "syntax
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
+let g:syntastic_aggregate_errors = 1
 
 if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
-        echo "install pylint"
         execute getcwd() + "/virutalenv_run/bin/pip install pylint"
 endif
 
