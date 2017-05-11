@@ -1,6 +1,6 @@
 [[ $- == *i* ]] || return
 
-export PATH=~/.local/bin/:~/.local/usr/bin/:/usr/local/bin:~/.dotfiles/bin/::$PATH
+export PATH=~/.local/bin/:~/.local/usr/bin/:/usr/local/bin:~/.dotfiles/bin/:$PATH
 
 function parse_current_tunnel() {
   if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
@@ -42,9 +42,13 @@ _ssh_auth_save() {
 	    rm -f "$SSH_SOCK_PATH"
 	    ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
     fi
+    echo 'ssh agent refreshed'
 }
+
+# export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+
 alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
-alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) ; tmux'
+alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
 
 
 
