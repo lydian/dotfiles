@@ -61,7 +61,7 @@ Host deploy-prod
 
 Host devc spam deploy-* dev*-devc
     User tingyenl
-    IdentityFile ~/.ssh/id_rsa
+    IdentityFile ~/.ssh/yelp_rsa
 
 Host lydian
     User lydian
@@ -71,4 +71,5 @@ Host lydian
 
 Host *
     ForwardAgent yes
-
+    AddKeysToAgent yes
+    UseKeychain yes
