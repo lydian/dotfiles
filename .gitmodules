@@ -25,3 +25,9 @@
 [submodule "package/tpm"]
 	path = package/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "package/powerline-shell"]
+	path = package/powerline-shell
+	url = https://github.com/milkbikis/powerline-shell
+[submodule "package/fonts"]
+	path = package/fonts
+	url = https://github.com/powerline/fonts.git

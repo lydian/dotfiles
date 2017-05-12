@@ -32,7 +32,16 @@ PURPLE="\[\033[0;35m\]"
 CYAN="\[\033[0;36m\]"
 NO_COLOUR="\[\033[0m\]"
 
-PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
+#
+# PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
+function _update_ps1() {
+    PS1="$(~/.dotfiles/package/powerline-shell/powerline-shell.py $? --mode flat 2> /dev/null)"
+}
+
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+export TERM=xterm-256color
 
 # Set symlink for forwarding agent in screen
 _ssh_auth_save() {
@@ -49,7 +58,6 @@ _ssh_auth_save() {
 
 alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
 alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
-
 
 shopt -s expand_aliases # To allow use the alias in screen
 
@@ -78,3 +86,5 @@ fi
 
 # bashmark
 source ~/.local/bin/bashmarks.sh
+export WORKON_HOME=~/Envs
+source /usr/local/bin/virtualenvwrapper.sh
