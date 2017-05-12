@@ -49,7 +49,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'gregsexton/gitv'
 
 " Snippet
-Plugin 'SirVer/ultisnips'
+" Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " Python
