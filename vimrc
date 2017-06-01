@@ -351,7 +351,7 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 " Do not show preview window for autocomplete
-"set completeopt-=preview
+set completeopt-=preview
 
 "jedi-vim
 "" disable everything only keep the argument completion helpers
@@ -396,6 +396,10 @@ let g:SimpylFold_docstring_preview=1
 set foldmethod=indent
 set foldlevel=99
 
+" py.test
+nmap <leader>tf :Pytest file<CR>
+nmap <leader>tc :Pytest class<CR>
+nmap <leader>tm :Pytest method<CR>
 
 "jshint2
 let jshint2_save = 1
