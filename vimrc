@@ -55,7 +55,7 @@ Plugin 'honza/vim-snippets'
 " Python
 "" Schema check, debug
 "Plugin 'klen/python-mode'
-"Plugin 'davidhalter/jedi-vim'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'Valloric/YouCompleteMe'
 
 "" syntax check
@@ -337,8 +337,6 @@ map <C-n> :NERDTreeToggle<CR>
 
 map <leader>f :bprevious<CR>
 map <leader>n :bnext<CR>
-" Do not show preview window for autocomplete
-set completeopt-=preview
 
 " Airline config
 " Enable the list of buffers
@@ -349,6 +347,22 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 "YouCompleteMe
 nnoremap <leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_goto_buffer_command = 'horizontal-split'
+let g:ycm_complete_in_strings = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+" Do not show preview window for autocomplete
+"set completeopt-=preview
+
+"jedi-vim
+"" disable everything only keep the argument completion helpers
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
+let g:jedi#show_call_signatures_delay = 0
 
 " virtualenv
 let g:virtualenv_auto_activate = 1
@@ -372,10 +386,10 @@ let g:pymode_trim_whitespace = 1
 let g:pymode_rope_autoimport = 0
 let g:pymode_rope = 0
 let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_completion = 1
-let g:pymode_rope_goto_definition_bind = '<leader>d'
-let g:pymode_rope_rename_bind = '<leader>r'
-let g:pymode_rope_rename_module_bind = '<leader>rm'
+"let g:pymode_rope_completion = 1
+"let g:pymode_rope_goto_definition_bind = '<leader>d'
+"let g:pymode_rope_rename_bind = '<leader>r'
+"let g:pymode_rope_rename_module_bind = '<leader>rm'
 
 " code folding
 let g:SimpylFold_docstring_preview=1
@@ -390,11 +404,14 @@ let jshint2_save = 1
 let g:tmux_navigator_no_mappings = 1
 
 "syntax
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
+let g:syntastic_python_checkers = ['python', 'flake8', 'pyflakes', 'pylint']
+"let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
 let g:syntastic_aggregate_errors = 1
 
 if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
