@@ -6,6 +6,7 @@ install-vim-settings:
 	mkdir -p ~/.vim
 	ln -fs ~/.dotfiles/vimrc ~/.vimrc
 	vim +PluginInstall +qall
+	./compile_ycm.sh
 
 install-config:
 	ln -fs ~/.dotfiles/bashrc ~/.bashrc
@@ -14,8 +15,7 @@ install-config:
 	ln -fs ~/.dotfiles/pythonrc.py ~/.pythonrc.py
 	ln -fs ~/.dotfiles/git-completion.bash ~/.git-completion.bash
 	ln -fs ~/.dotfiles/remotecopyrc ~/.remotecopyrc
-	ln -fs ~/.dotfiles/ssh-config ~/.ssh/config
-	ln -fs ~/.dotfiles/gitconfig ~/.ssh/.gitconfig
+	ln -fs ~/.dotfiles/gitconfig ~/.gitconfig
 	ln -fs ~/.dotfiles/tmux.conf ~/.tmux.conf
 	ln -fs ~/.dotfiles/pylintrc ~/.pylintrc
 
@@ -27,4 +27,3 @@ build-tmux:
 	sh ./tmux_local_install.sh
 build-vim:
 	sh ./install_vim.sh
-
