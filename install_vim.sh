@@ -10,6 +10,6 @@ cd vim
             --with-python3-config-dir=/usr/lib/python3.5/config \
             --enable-perlinterp \
             --enable-luainterp \
-            --enable-gui=gtk2 --enable-cscope --prefix=/usr
-make VIMRUNTIMEDIR=/usr/share/vim/vim74
+            --enable-cscope --prefix=/usr
+make VIMRUNTIMEDIR=/usr/share/vim/vim80
 make install DESTDIR=~/.local
