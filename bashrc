@@ -48,7 +48,7 @@ _ssh_auth_save() {
 # export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 
 alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
-alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
+alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
 
 
 
