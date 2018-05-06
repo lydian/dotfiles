@@ -2,6 +2,10 @@
 
 export PATH=~/.local/bin/:~/.local/usr/bin/:~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/.dotfiles/bin/:~/.local/bin::$PATH
 
+export LD_LIBRARY_PATH=~/.local/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
+
+
 function parse_current_tunnel() {
   if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
         echo "($YELP_SPAM_SANDBOX_TYPE)"
@@ -34,6 +38,7 @@ NO_COLOUR="\[\033[0m\]"
 
 PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
 
+
 # Set symlink for forwarding agent in screen
 _ssh_auth_save() {
     SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
@@ -44,13 +49,9 @@ _ssh_auth_save() {
     fi
     echo 'ssh agent refreshed'
 }
-
-# export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-
-alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
-alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
-
-
+alias tmux='_ssh_auth_save && tmux2'
+alias ta='_ssh_auth_save && tmux2 attach'
+alias fixssh='export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock'
 
 shopt -s expand_aliases # To allow use the alias in screen
 

@@ -1,5 +1,5 @@
 " Download vundle if not yet installed
-let iCanHazVundle=1
+let iCanHazVundle=2
 let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
   silent !mkdir -p ~/.vim/bundle
@@ -98,6 +98,10 @@ Plugin 'mattn/emmet-vim'
 
 " puppet
 Plugin 'rodjek/vim-puppet'
+
+" jenkinsfile
+Plugin 'martinda/Jenkinsfile-vim-syntax'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -125,6 +129,9 @@ set nu
 
 syntax on		" syntax highlight
 set hlsearch		" search highlighting
+
+au BufNewFile,BufRead jenkinsfile,Jenkinsfile,*.jenkinsfile,*.Jenkinsfile setf Jenkinsfile
+
 
 if has("gui_running")	" GUI color and font settings
   set guifont=Osaka-Mono:h20
@@ -181,6 +188,7 @@ autocmd BufWritePost .vimrc source %
    "set softtabstop=2
    "set shiftwidth=2
 
+   autocmd FileType Jenkinsfile setlocal tabstop=4|set shiftwidth=4|set softtabstop=4
    autocmd FileType yaml setlocal tabstop=8|set shiftwidth=4| set softtabstop=2|set expandtab
    autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType jasmine.javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
@@ -199,6 +207,9 @@ set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
 set statusline+=\ \ \ [%{&ff}/%Y]
 set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
 set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
+
+
+"
 
 function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "")
@@ -456,3 +467,11 @@ let g:SuperTabDefaultCompletionType = "context"
 " make CSS omnicompletion work for SASS and SCSS
 autocmd BufEnter /usr/share/vim/vim73/doc/*.txt  set nospell
 autocmd BufLeave /usr/share/vim/vim73/doc/*.txt  set spell
+
+" copy the current text selection to the system clipboard
+if has('gui_running') || has('nvim') && exists('$DISPLAY')
+  noremap <Leader>y "+y
+else
+  " copy to attached terminal using the yank(1) script:
+  noremap <Leader>y y:call system('~/.local/bin/yank > /dev/tty', @0)<Return>
+endif
