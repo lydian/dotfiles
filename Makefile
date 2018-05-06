@@ -24,6 +24,6 @@ install-tools:
 	cd package/bashmarks && make install
 
 build-tmux:
-	sh ./tmux_local_install.sh
+	sh ./install_scripts/tmux_local_install.sh
 build-vim:
-	sh ./install_vim.sh
+	sh ./install_scripts/install_vim.sh
