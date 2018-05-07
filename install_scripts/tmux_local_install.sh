@@ -7,7 +7,7 @@
 # exit on error
 set -e
 
-TMUX_VERSION=2.3
+TMUX_VERSION=2.7
 
 # create our directories
 mkdir -p $HOME/.local $HOME/tmux_tmp
@@ -16,17 +16,18 @@ cd $HOME/tmux_tmp
 # download source files for tmux, libevent, and ncurses
 wget --no-check-certificate -O tmux-${TMUX_VERSION}.tar.gz https://github.com/tmux/tmux/archive/${TMUX_VERSION}.tar.gz
 echo 'download libevent'
-curl -L https://github.com/downloads/libevent/libevent/libevent-2.0.19-stable.tar.gz -O
+curl -L https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz -O
 # wget --no-check-certificate https://github.com/downloads/libevent/libevent/libevent-2.0.19-stable.tar.gz
-wget --no-check-certificate ftp://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz
+echo 'download ncurses'
+wget --no-check-certificate ftp://ftp.invisible-island.net/ncurses/ncurses.tar.gz
 
 # extract files, configure, and compile
 
 ############
 # libevent #
 ############
-tar xvzf libevent-2.0.19-stable.tar.gz
-cd libevent-2.0.19-stable
+tar xvzf libevent-2.1.8-stable.tar.gz
+cd libevent-2.1.8-stable
 ./configure --prefix=$HOME/.local --disable-shared
 make
 make install
@@ -35,8 +36,9 @@ cd ..
 ############
 # ncurses  #
 ############
-tar xvzf ncurses-5.9.tar.gz
-cd ncurses-5.9
+mkdir ncurses
+tar xvzf ncurses.tar.gz -C ncurses --strip-components=1
+cd ncurses
 ./configure --prefix=$HOME/.local
 make
 make install

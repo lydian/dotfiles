@@ -1,6 +1,6 @@
 [[ $- == *i* ]] || return
 
-export PATH=~/.local/bin/:~/.local/usr/bin/:~/.local/download/cmake-2.8.12.2-Linux-i386/bin/:/usr/local/bin:~/.dotfiles/bin/:~/.local/bin::$PATH
+export PATH=~/.local/bin:~/.dotfiles/bin/:$PATH
 
 export LD_LIBRARY_PATH=~/.local/lib64:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
@@ -49,7 +49,7 @@ _ssh_auth_save() {
     fi
     echo 'ssh agent refreshed'
 }
-alias tmux='_ssh_auth_save && tmux2'
+alias tmux='_ssh_auth_save && tmux'
 alias ta='_ssh_auth_save && tmux2 attach'
 alias fixssh='export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock'
 
