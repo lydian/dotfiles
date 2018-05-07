@@ -25,16 +25,12 @@ Plugin 'flazz/vim-colorschemes'
 " File finder
 Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Shougo/unite.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'mileszs/ack.vim'
 
 " folding
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'roalddevries/yaml.vim'
 
-" Moving cursor
-Plugin 'Lokaltog/vim-easymotion'
 " display tabline in color
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-scripts/taglist.vim'
@@ -208,29 +204,29 @@ autocmd BufWritePost .vimrc source %
 "}
 
 
-" status line {
-set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
-set statusline+=\ \ \ [%{&ff}/%Y]
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
-set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
-
-
+" " status line {
+" set laststatus=2
+" set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+" set statusline+=\ \ \ [%{&ff}/%Y]
+" set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
+" set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
 "
-
-function! CurDir()
-    let curdir = substitute(getcwd(), $HOME, "~", "")
-    return curdir
-endfunction
-
-function! HasPaste()
-    if &paste
-        return '[PASTE]'
-    else
-        return ''
-    endif
-endfunction
-
+"
+" "
+"
+" function! CurDir()
+"     let curdir = substitute(getcwd(), $HOME, "~", "")
+"     return curdir
+" endfunction
+"
+" function! HasPaste()
+"     if &paste
+"         return '[PASTE]'
+"     else
+"         return ''
+"     endif
+" endfunction
+"
 "}
 
 " code folding
@@ -357,8 +353,8 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Ctrl+N to Toggle Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
-map <leader>f :bprevious<CR>
-map <leader>n :bnext<CR>
+" map <leader>f :bprevious<CR>
+" map <leader>n :bnext<CR>
 " Do not show preview window for autocomplete
 set completeopt-=preview
 
@@ -437,17 +433,19 @@ let jshint2_save = 1
 "Tmux integration
 let g:tmux_navigator_no_mappings = 1
 
+"comment
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'start'
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCommentEmptyLines = 1
+
+
 "syntax
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
-
-if !filereadable("virtualenv_run/bin/pylint") && isdirectory('virtualenv_run')
-        echo "install pylint"
-        execute getcwd() + "/virutalenv_run/bin/pip install pylint"
-endif
 
 nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <c-j> :TmuxNavigateDown<cr>

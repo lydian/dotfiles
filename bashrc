@@ -49,9 +49,7 @@ _ssh_auth_save() {
     fi
     echo 'ssh agent refreshed'
 }
-alias tmux='_ssh_auth_save && tmux'
-alias ta='_ssh_auth_save && tmux2 attach'
-alias fixssh='export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock'
+alias tmux='_ssh_auth_save; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
 
 shopt -s expand_aliases # To allow use the alias in screen
 
@@ -80,3 +78,8 @@ fi
 
 # bashmark
 source ~/.local/bin/bashmarks.sh
+if [ "$(uname)" == "Darwin" ]; then
+    echo "Mac don't start a tmux session"
+elif ! { [ "$(expr substr $(uname -s) 1 5)" == "Linux" ] &&  [ -n "$TMUX" ]; } then
+   tmux attach || tmux
+fi
