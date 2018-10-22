@@ -318,7 +318,8 @@ nnoremap <C-V> <C-W>t<C-W>H
 nnoremap <C-H> <C-W>t<C-W>K
 
 "Go to definition
-map <leader>d :YcmCompleter GoTo<CR>
+map <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>gr :YcmCompleter GoToReferences<CR>
 "map <leader>d :RopeGotoDefinition<CR>
 "map <leader>r :RopeRename<CR>
 
