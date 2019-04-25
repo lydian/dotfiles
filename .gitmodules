@@ -25,3 +25,6 @@
 [submodule "package/tpm"]
 	path = package/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "package/fasd"]
+	path = package/fasd
+	url = https://github.com/clvv/fasd.git

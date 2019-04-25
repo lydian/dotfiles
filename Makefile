@@ -15,6 +15,7 @@ install-config:
 install-tools:
 	git submodule update --init
 	cd package/bashmarks && make install
+	cp package/fasd/fasd ~/.local/bin
 
 build-tmux:
 	sh ./install_scripts/tmux_local_install.sh

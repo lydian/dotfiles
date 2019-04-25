@@ -38,8 +38,6 @@ NO_COLOUR="\[\033[0m\]"
 
 PS1="$YELLOW\$(parse_inenv)\$(parse_current_tunnel)$GREEN\u$CYAN@\h$NO_COLOUR:\w$PURPLE\$(parse_git_branch)$NO_COLOUR\$ "
 
-source ~/.alias.bash
-
 # Set symlink for forwarding agent in screen
 _ssh_auth_save() {
     SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
@@ -51,6 +49,7 @@ _ssh_auth_save() {
     echo 'ssh agent refreshed'
 }
 alias tmux='_ssh_auth_save; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
+alias vim='vim8'
 
 shopt -s expand_aliases # To allow use the alias in screen
 
