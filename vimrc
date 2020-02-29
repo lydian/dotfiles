@@ -1,5 +1,5 @@
 " Download vundle if not yet installed
-let iCanHazVundle=1
+let iCanHazVundle=2
 let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
 if !filereadable(vundle_readme)
   silent !mkdir -p ~/.vim/bundle
@@ -18,6 +18,8 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+" Remote copy
+Plugin 'fcpg/vim-osc52'
 
 "color scheme
 Plugin 'flazz/vim-colorschemes'
@@ -25,21 +27,19 @@ Plugin 'flazz/vim-colorschemes'
 " File finder
 Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Shougo/unite.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'mileszs/ack.vim'
 
 " folding
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'roalddevries/yaml.vim'
 
-" Moving cursor
-Plugin 'Lokaltog/vim-easymotion'
+
 " display tabline in color
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-scripts/taglist.vim'
 
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'vim-utils/vim-husk'
 
 " Git
 "" Provide handy Gxxx git command
@@ -49,17 +49,17 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'gregsexton/gitv'
 
 " Snippet
-Plugin 'SirVer/ultisnips'
+" Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " Python
 "" Schema check, debug
-"Plugin 'klen/python-mode'
-Plugin 'davidhalter/jedi-vim'
+Plugin 'klen/python-mode'
+"Plugin 'davidhalter/jedi-vim'
 Plugin 'Valloric/YouCompleteMe'
 
 "" syntax check
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 "" run pytest in vim
 Plugin 'alfredodeza/pytest.vim'
 "" Commenter
@@ -86,7 +86,8 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'burnettk/vim-angular'
 Plugin 'matthewsimo/angular-vim-snippets'
 Plugin 'Shutnik/jshint2.vim'
-
+Plugin 'leafgarland/typescript-vim'
+Plugin 'mxw/vim-jsx'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
@@ -98,6 +99,10 @@ Plugin 'mattn/emmet-vim'
 
 " puppet
 Plugin 'rodjek/vim-puppet'
+
+" jenkinsfile
+Plugin 'martinda/Jenkinsfile-vim-syntax'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -121,10 +126,20 @@ set bs=2		" allow backspacing over everything in insert mode
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
-set nu
+
+" Hybrid linenumber
+set number relativenumber
+augroup numbertoggle
+        autocmd!
+        autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+        autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 syntax on		" syntax highlight
 set hlsearch		" search highlighting
+
+au BufNewFile,BufRead jenkinsfile,Jenkinsfile,*.jenkinsfile,*.Jenkinsfile setf Jenkinsfile
+
 
 if has("gui_running")	" GUI color and font settings
   set guifont=Osaka-Mono:h20
@@ -135,9 +150,9 @@ if has("gui_running")	" GUI color and font settings
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
 else
 " terminal color settings
-	colorscheme candy
-    set background=dark
-	hi Search cterm=NONE ctermfg=black ctermbg=grey
+  colorscheme candy
+  set background=dark
+"hi Search cterm=NONE ctermfg=black ctermbg=grey
 endif
 
 " Setup spell
@@ -181,39 +196,49 @@ autocmd BufWritePost .vimrc source %
    "set softtabstop=2
    "set shiftwidth=2
 
+   autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+   autocmd FileType Jenkinsfile setlocal tabstop=4|set shiftwidth=4|set softtabstop=4
    autocmd FileType yaml setlocal tabstop=8|set shiftwidth=4| set softtabstop=2|set expandtab
-   autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
-   autocmd FileType jasmine.javascript setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType scss setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType html setlocal shiftwidth=2 tabstop=2 | set softtabstop=2
    autocmd FileType java setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType python setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType *.sh setlocal tabstop=4|set shiftwidth=4|set expandtab
    autocmd FileType Makefile set noexpandtab
+   autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 | set softtabstop=4
+   autocmd FileType typescript.tsx setlocal shiftwidth=4 tabstop=4 | set softtabstop=4
+   autocmd FileType jasmine.javascript setlocal shiftwidth=4 tabstop=4 | set softtabstop=4
 "}
 
 
-" status line {
-set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
-set statusline+=\ \ \ [%{&ff}/%Y]
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
-set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
-
-function! CurDir()
-    let curdir = substitute(getcwd(), $HOME, "~", "")
-    return curdir
-endfunction
-
-function! HasPaste()
-    if &paste
-        return '[PASTE]'
-    else
-        return ''
-    endif
-endfunction
-
+" " status line {
+" set laststatus=2
+" set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+" set statusline+=\ \ \ [%{&ff}/%Y]
+" set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
+" set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
+"
+"
+" "
+"
+" function! CurDir()
+"     let curdir = substitute(getcwd(), $HOME, "~", "")
+"     return curdir
+" endfunction
+"
+" function! HasPaste()
+"     if &paste
+"         return '[PASTE]'
+"     else
+"         return ''
+"     endif
+" endfunction
+"
 "}
+
+" code folding
+set foldmethod=indent
+set foldlevel=99
 
 " Highlight after 80
 " highlight ColorColumn ctermbg=
@@ -300,7 +325,8 @@ nnoremap <C-V> <C-W>t<C-W>H
 nnoremap <C-H> <C-W>t<C-W>K
 
 "Go to definition
-map <leader>d :YcmCompleter GoTo<CR>
+map <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>gr :YcmCompleter GoToReferences<CR>
 "map <leader>d :RopeGotoDefinition<CR>
 "map <leader>r :RopeRename<CR>
 
@@ -335,8 +361,10 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Ctrl+N to Toggle Nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
-map <leader>f :bprevious<CR>
-map <leader>n :bnext<CR>
+" map <leader>f :bprevious<CR>
+" map <leader>n :bnext<CR>
+" Do not show preview window for autocomplete
+set completeopt-=preview
 
 " Airline config
 " Enable the list of buffers
@@ -367,7 +395,11 @@ let g:jedi#show_call_signatures_delay = 0
 " virtualenv
 let g:virtualenv_auto_activate = 1
 
+" virtualenv
+let g:virtualenv_auto_activate = 1
+
 " Python-mode
+let g:pymode_python = 'python'
 " turn-off plugin's warning
 let g:pymode_warnings = 0
 " Auto Detect virtualenv
@@ -407,6 +439,13 @@ let jshint2_save = 1
 "Tmux integration
 let g:tmux_navigator_no_mappings = 1
 
+"comment
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'start'
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCommentEmptyLines = 1
+
+
 "syntax
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -414,6 +453,7 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq = 1
+let g:syntastic_python_python_exec='python3'
 let g:syntastic_python_checkers = ['python', 'flake8', 'pyflakes', 'pylint']
 "let g:syntastic_python_pylint_exec ='virtualenv_run/bin/pylint'
 let g:syntastic_aggregate_errors = 1
@@ -448,3 +488,12 @@ let g:SuperTabDefaultCompletionType = "context"
 " make CSS omnicompletion work for SASS and SCSS
 autocmd BufEnter /usr/share/vim/vim73/doc/*.txt  set nospell
 autocmd BufLeave /usr/share/vim/vim73/doc/*.txt  set spell
+
+xmap <Leader>y y:call SendViaOSC52(getreg('"'))<cr>
+" copy the current text selection to the system clipboard
+" if has('gui_running') || has('nvim') && exists('$DISPLAY')
+"  noremap <Leader>y "+y
+"else
+  " copy to attached terminal using the yank(1) script:
+""  noremap <Leader>y y:call system('~/.local/bin/yank > /dev/tty', @0)<Return>
+"endif

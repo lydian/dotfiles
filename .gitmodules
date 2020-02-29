@@ -16,9 +16,6 @@
 [submodule "vim"]
 	path = vim
 	url = git@github.com:lydian/vimrc.git
-[submodule "bin/remotecopy"]
-	path = package/remotecopy
-	url = git@bitbucket.org:lydian/remotecopy.git
 [submodule "package/hhighlighter"]
 	path = package/hhighlighter
 	url = https://github.com/paoloantinori/hhighlighter.git
@@ -28,3 +25,6 @@
 [submodule "package/tpm"]
 	path = package/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "package/fasd"]
+	path = package/fasd
+	url = https://github.com/clvv/fasd.git

@@ -2,6 +2,10 @@
 
 export PATH=~/.local/bin/:~/.local/usr/bin/:/usr/local/bin:~/.dotfiles/bin/:$PATH
 
+export LD_LIBRARY_PATH=~/.local/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
+
+
 function parse_current_tunnel() {
   if [[ -n "$YELP_SPAM_SANDBOX_TYPE" ]]; then
         echo "($YELP_SPAM_SANDBOX_TYPE)"
@@ -47,13 +51,22 @@ _ssh_auth_save() {
 
 # export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 
-alias screen='_ssh_auth_save ; export HOSTNAME=$(hostname) ; screen'
-alias tmux='_ssh_auth_save ; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
-
-
+alias tmux='_ssh_auth_save; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
+# alias vim='~/.local/usr/bin/vim'
+alias vim='vim8'
 
 shopt -s expand_aliases # To allow use the alias in screen
 
+
+# Set symlink for forwarding agent in screen
+SSH_SOCK_PATH="$HOME/.ssh/ssh_auth_sock"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != "$SSH_SOCK_PATH" ]
+then
+	rm -f "$SSH_SOCK_PATH"
+	ln -sf "$SSH_AUTH_SOCK" "$SSH_SOCK_PATH"
+fi
+
+shopt -s expand_aliases # To allow use the alias in screen
 
 # Auto complete git
 if [ -f ~/.git-completion.bash ]; then
@@ -70,3 +83,14 @@ fi
 
 # bashmark
 source ~/.local/bin/bashmarks.sh
+if [ "$(uname)" == "Darwin" ]; then
+    echo "Mac don't start a tmux session"
+elif ! { [ "$(expr substr $(uname -s) 1 5)" == "Linux" ] &&  [ -n "$TMUX" ]; } then
+   tmux attach || tmux
+fi
+
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi

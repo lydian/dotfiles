@@ -1,12 +1,12 @@
-# Bash 
+# Bash
 
-Author: Lydian 
+Author: Lydian
 
 
 ## Installation
 
-	cd ~/ 
-	git clone git@bitbucket.org:lydian/dotfiles.git 
+	cd ~/
+	git clone git@bitbucket.org:lydian/dotfiles.git
 	cd .dotfiles
 	make
 
@@ -16,7 +16,7 @@ Author: Lydian
 * serveral shortcut for yelp daily programming work
 
 ## tmux.conf
-* Display label of each screen at the bottom 
+* Display label of each screen at the bottom
 * Update the keymap to be exactly the same as screen, i.e., use ^a instead of ^b
 * Use <shift> + A to rename screen
 * forwarding ssh agent while reconnecting to the session
@@ -37,14 +37,14 @@ ref: [source|https://github.com/git/git/blob/master/contrib/completion/git-compl
 ## vim
 
 ### PLUGINS
-* Plugins are managed by vundle. 
+* Plugins are managed by vundle.
 
 - vim-color-schems: collection of all color schemes. [https://github.com/flazz/vim-colorschemes]
 - Ctrl-P: Fuzzy file finder [https://github.com/kien/ctrlp.vim]
 - NERDTree: Display directory [https://github.com/scrooloose/nerdtree]
 - easymotion: Show shortcut to help you move cursor. [https://github.com/Lokaltog/vim-easymotion]
-- tabline: Show tabline in color [https://github.com/mkitt/tabline.vim] 
-- taglist: Show ctags list to help you view structure of the code. [https://github.com/vim-scripts/taglist.vim] 
+- tabline: Show tabline in color [https://github.com/mkitt/tabline.vim]
+- taglist: Show ctags list to help you view structure of the code. [https://github.com/vim-scripts/taglist.vim]
 - fugitive: better git support [https://github.com/tpope/vim-fugitive]
 - gitgutter: show change on file [https://github.com/airblade/vim-gitgutter]
 - neocomplcache: [https://github.com/Shougo/neocomplcache]
