@@ -51,7 +51,7 @@ _ssh_auth_save() {
 
 # export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 
-alias tmux='_ssh_auth_save; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux2'
+alias tmux='_ssh_auth_save; export HOSTNAME=$(hostname) SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock; tmux'
 # alias vim='~/.local/usr/bin/vim'
 alias vim='vim8'
 
@@ -79,10 +79,10 @@ if [ -f ~/.alias.bash ]; then
 fi
 
 # load highlighter
-. ~/.dotfiles/package/hhighlighter/h.sh
+# . ~/.dotfiles/package/hhighlighter/h.sh
 
 # bashmark
-source ~/.local/bin/bashmarks.sh
+# source ~/.local/bin/bashmarks.sh
 if [ "$(uname)" == "Darwin" ]; then
     echo "Mac don't start a tmux session"
 elif ! { [ "$(expr substr $(uname -s) 1 5)" == "Linux" ] &&  [ -n "$TMUX" ]; } then
@@ -94,3 +94,4 @@ if [ -e /usr/share/terminfo/x/xterm-256color ]; then
 else
         export TERM='xterm-color'
 fi
+alias restart-ycp='ycp stop && ycp config build && ycp start'

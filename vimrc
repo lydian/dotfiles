@@ -242,7 +242,7 @@ set foldlevel=99
 
 " Highlight after 80
 " highlight ColorColumn ctermbg=
-let &colorcolumn=join(range(81,82),",")
+let &colorcolumn=join(range(89,90),",")
 
 " C/C++ specific settings
 autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
